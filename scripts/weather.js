@@ -23,7 +23,6 @@ function getCurrentWeather(lat, long, appid, opts) {
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${appid}&units=metric`, opts)
         .then(response => response.json())
         .then(res => {
-            console.log(res);
 
             //set current location and date
             let cuurentLocation = `<h1 class="location-date__location">${res.name}, ${res.sys.country}</h1> <div>${new Date(res.dt * 1000).toDateString()}</div>`;
@@ -62,7 +61,6 @@ function getFiveDayWeather(lat, long, appid, opts) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${appid}&units=metric`, opts)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
             const todaysForcast = result.list.slice(0, 7);
 
             //Todays weather
@@ -82,7 +80,6 @@ function getFiveDayWeather(lat, long, appid, opts) {
             const fiveDaysForcast = result.list.slice(7, result.list.length);
             // console.groupCollapsed(fiveDaysForcast);
             for (let i = 0; i < fiveDaysForcast.length; i += 8) {
-                console.log(fiveDaysForcast[i])
                 const item = fiveDaysForcast[i];
                 const date =item.dt_txt.split(" ")[0].split("-");
                 
@@ -99,33 +96,3 @@ function getFiveDayWeather(lat, long, appid, opts) {
         })
         .catch(error => console.log('error', error));
 }
-
-/*let html = `<h1 id="weather-title">Weather for ${result.city?.name}</h1>`;
-            result.list.forEach(ele => {
-                console.log(ele.weather)
-                html += `<section class="weather-box">
-           <div class="weather-info">
-               <div class="current-weather">${ele.weather[0].description} <span class="normal">at ${ele.dt_txt}</span></div>
-               <div class="flex">
-                   <div class="weather-temp">
-                       ${ele.main.temp} &deg;
-                   </div>
-                   <div class="weather-sub-info">
-                       <div class="grid weather-sub-info-col">
-                           <div class="flex align-end temperature">Min ${ele.main.temp_max} </div>
-                           <div class="temperature">Max ${ele.main.temp_min}</div>
-                       </div>
-                       <div class="grid weather-sub-info-col">
-                           <div class="flex align-end temperature">Humidity ${ele.main.humidity}</div>
-                           <div class="temperature">Wind ${ele.wind.speed}</div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <div class="weather-image">
-               <img src="https://openweathermap.org/img/wn/${ele.weather[0].icon}@2x.png" alt="weather">
-           </div>
-       </section>`;
-            })
-            weatherContainer.innerHTML = html;
-            */
